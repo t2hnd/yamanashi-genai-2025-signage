@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #FFF8DC;
+}
+
+.signage-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.price-text {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+}
+
+.placeholder-image {
+  background: linear-gradient(135deg, #F5DEB3 0%, #DEB887 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-card {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* スコアバー */
+.score-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* 在庫インジケーター */
+.stock-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 3px;
+}
+
+.stock-dot.filled { background: #8B4513; }
+.stock-dot.empty { background: #e5e7eb; }
+
+/* ティッカー */
+.ticker-container {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-content {
+  display: inline-block;
+  animation: ticker 20s linear infinite;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* スライダー */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #e5e7eb;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #8B4513;
+  cursor: pointer;
+}
+
+/* ナビゲーション */
+.nav-link {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+  background-color: rgba(139, 69, 19, 0.1);
+}
+
+.nav-link.active {
+  background-color: #8B4513;
+  color: white;
+}
