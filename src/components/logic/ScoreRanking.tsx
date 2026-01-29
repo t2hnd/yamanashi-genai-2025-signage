@@ -1,7 +1,7 @@
 import { TrendingUp, Clock, Thermometer, Package } from 'lucide-react';
 import { useDemoContext } from '../../contexts/DemoContext';
 import { getCurrentTimeSlot } from '../../data/timeSlots';
-import { getCurrentSeason, getSeasonById } from '../../data/seasonConfigs';
+import { getCurrentSeason, getSeasonById, seasonRecommendedTags } from '../../data/seasonConfigs';
 import { getRecommendations } from '../../utils/recommendationEngine';
 import { Recommendation } from '../../types';
 
@@ -26,6 +26,12 @@ export default function ScoreRanking({ selectedProduct, onSelectProduct }: Score
     settings.scoreWeights,
     10
   );
+
+  // ブーストされるタグを取得
+  const boostedTags = new Set([
+    ...timeSlot.recommendedTags,
+    ...(seasonRecommendedTags[season.id] || [])
+  ]);
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'bg-emerald-500';
@@ -68,6 +74,7 @@ export default function ScoreRanking({ selectedProduct, onSelectProduct }: Score
         {recommendations.map((rec) => {
           const isSelected = selectedProduct?.product.code === rec.product.code;
           const breakdown = rec.scoreBreakdown;
+          const productTags = rec.product.tags;
 
           return (
             <button
@@ -91,7 +98,24 @@ export default function ScoreRanking({ selectedProduct, onSelectProduct }: Score
                 <div className="font-medium text-sm text-gray-900 truncate">
                   {rec.product.name}
                 </div>
-                <div className="text-xs text-gray-400 mt-0.5">{rec.product.department}</div>
+                {/* タグ表示 */}
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {productTags.map((tag) => {
+                    const isBoosted = boostedTags.has(tag);
+                    return (
+                      <span
+                        key={tag}
+                        className={`text-[10px] px-1.5 py-0.5 rounded ${
+                          isBoosted
+                            ? 'bg-orange-100 text-orange-700 font-medium'
+                            : 'bg-gray-100 text-gray-500'
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* 総合スコア */}
@@ -141,6 +165,9 @@ export default function ScoreRanking({ selectedProduct, onSelectProduct }: Score
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 bg-violet-500 rounded" /> 在庫
+          </span>
+          <span className="flex items-center gap-1.5 ml-auto">
+            <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 rounded text-[10px]">タグ</span> ブースト中
           </span>
         </div>
       </div>

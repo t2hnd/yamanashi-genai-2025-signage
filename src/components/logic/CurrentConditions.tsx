@@ -1,7 +1,7 @@
-import { Clock, Sun, Calendar } from 'lucide-react';
+import { Clock, Sun, Calendar, Tag } from 'lucide-react';
 import { useDemoContext } from '../../contexts/DemoContext';
 import { getCurrentTimeSlot } from '../../data/timeSlots';
-import { getCurrentSeason, getSeasonById, isWeekend } from '../../data/seasonConfigs';
+import { getCurrentSeason, getSeasonById, isWeekend, seasonRecommendedTags } from '../../data/seasonConfigs';
 
 export default function CurrentConditions() {
   const { settings } = useDemoContext();
@@ -13,6 +13,10 @@ export default function CurrentConditions() {
     : getCurrentSeason();
   const weekend = isWeekend();
   const isSimulated = settings.simulatedHour !== null || settings.simulatedSeason !== null;
+
+  // ブーストされるタグを取得
+  const timeSlotTags = timeSlot.recommendedTags;
+  const seasonTags = seasonRecommendedTags[season.id] || [];
 
   return (
     <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
@@ -27,7 +31,7 @@ export default function CurrentConditions() {
         )}
       </div>
 
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-4 mb-4">
         {/* 時間帯 */}
         <div className="flex items-center gap-3 px-4 py-2.5 bg-gray-50 rounded-lg">
           <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center">
@@ -65,6 +69,38 @@ export default function CurrentConditions() {
               <div className="text-xs text-rose-600 font-medium">週末</div>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* ブーストされるタグ */}
+      <div className="border-t border-gray-100 pt-3">
+        <div className="flex items-center gap-2 mb-2">
+          <Tag className="w-4 h-4 text-gray-400" />
+          <span className="text-xs font-medium text-gray-500 uppercase">ブーストされるタグ</span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {/* 時間帯タグ */}
+          {timeSlotTags.map((tag) => (
+            <span
+              key={`time-${tag}`}
+              className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700"
+            >
+              <Clock className="w-3 h-3" />
+              {tag}
+            </span>
+          ))}
+          {/* 季節タグ */}
+          {seasonTags
+            .filter((tag) => !timeSlotTags.includes(tag))
+            .map((tag) => (
+              <span
+                key={`season-${tag}`}
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700"
+              >
+                <Sun className="w-3 h-3" />
+                {tag}
+              </span>
+            ))}
         </div>
       </div>
     </div>
