@@ -8,7 +8,9 @@ import {
   Package,
   Lightbulb,
   AlertTriangle,
-  Circle
+  Circle,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { useDemoContext } from '../contexts/DemoContext';
 import { getCurrentTimeSlot } from '../data/timeSlots';
@@ -25,6 +27,7 @@ export default function SignagePage() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [mainProduct, setMainProduct] = useState<Recommendation | null>(null);
   const [subProducts, setSubProducts] = useState<Recommendation[]>([]);
+  const [showScores, setShowScores] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -69,6 +72,18 @@ export default function SignagePage() {
           <h1 className="text-2xl font-bold">八ヶ岳高原のパン工房</h1>
         </div>
         <div className="flex items-center gap-4">
+          <button
+            onClick={() => setShowScores(!showScores)}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              showScores
+                ? 'bg-white/20 text-white'
+                : 'bg-white/10 text-white/70'
+            }`}
+            title={showScores ? 'スコア表示中' : 'スコア非表示'}
+          >
+            {showScores ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+            <span className="hidden sm:inline">{showScores ? 'デモ表示' : '実掲示'}</span>
+          </button>
           <span className="text-lg font-medium">{season.name}</span>
           <span className="text-2xl font-bold tabular-nums">
             {currentTime.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })}
@@ -94,10 +109,12 @@ export default function SignagePage() {
                   <Star className="w-5 h-5" />
                   本日のおすすめ
                 </div>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-emerald-500">{mainProduct.score}点</div>
-                  <div className="text-xs text-gray-500">推奨スコア</div>
-                </div>
+                {showScores && (
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-emerald-500">{mainProduct.score}点</div>
+                    <div className="text-xs text-gray-500">推奨スコア</div>
+                  </div>
+                )}
               </div>
 
               <img
@@ -115,70 +132,74 @@ export default function SignagePage() {
               <p className="text-gray-600 mb-3">{mainProduct.product.description}</p>
 
               {/* スコア詳細 */}
-              <div className="bg-gray-50 rounded-lg p-3 mb-3 text-sm">
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-emerald-500" />
-                    <span className="text-gray-600">利益率:</span>
-                    <div className="flex-1 score-bar">
-                      <div
-                        className="score-bar-fill bg-emerald-500"
-                        style={{ width: `${mainProduct.scoreBreakdown.profitScore}%` }}
-                      />
+              {showScores && (
+                <div className="bg-gray-50 rounded-lg p-3 mb-3 text-sm">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-4 h-4 text-emerald-500" />
+                      <span className="text-gray-600">利益率:</span>
+                      <div className="flex-1 score-bar">
+                        <div
+                          className="score-bar-fill bg-emerald-500"
+                          style={{ width: `${mainProduct.scoreBreakdown.profitScore}%` }}
+                        />
+                      </div>
+                      <span className="font-bold tabular-nums">
+                        {mainProduct.scoreBreakdown.profitScore.toFixed(0)}%
+                      </span>
                     </div>
-                    <span className="font-bold tabular-nums">
-                      {mainProduct.scoreBreakdown.profitScore.toFixed(0)}%
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-amber-500" />
-                    <span className="text-gray-600">時間帯:</span>
-                    <div className="flex-1 score-bar">
-                      <div
-                        className="score-bar-fill bg-amber-500"
-                        style={{ width: `${mainProduct.scoreBreakdown.timeSlotScore}%` }}
-                      />
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-amber-500" />
+                      <span className="text-gray-600">時間帯:</span>
+                      <div className="flex-1 score-bar">
+                        <div
+                          className="score-bar-fill bg-amber-500"
+                          style={{ width: `${mainProduct.scoreBreakdown.timeSlotScore}%` }}
+                        />
+                      </div>
+                      <span className="font-bold tabular-nums">
+                        {mainProduct.scoreBreakdown.timeSlotScore.toFixed(0)}
+                      </span>
                     </div>
-                    <span className="font-bold tabular-nums">
-                      {mainProduct.scoreBreakdown.timeSlotScore.toFixed(0)}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Thermometer className="w-4 h-4 text-blue-500" />
-                    <span className="text-gray-600">季節:</span>
-                    <div className="flex-1 score-bar">
-                      <div
-                        className="score-bar-fill bg-blue-500"
-                        style={{ width: `${mainProduct.scoreBreakdown.seasonScore}%` }}
-                      />
+                    <div className="flex items-center gap-2">
+                      <Thermometer className="w-4 h-4 text-blue-500" />
+                      <span className="text-gray-600">季節:</span>
+                      <div className="flex-1 score-bar">
+                        <div
+                          className="score-bar-fill bg-blue-500"
+                          style={{ width: `${mainProduct.scoreBreakdown.seasonScore}%` }}
+                        />
+                      </div>
+                      <span className="font-bold tabular-nums">
+                        {mainProduct.scoreBreakdown.seasonScore.toFixed(0)}
+                      </span>
                     </div>
-                    <span className="font-bold tabular-nums">
-                      {mainProduct.scoreBreakdown.seasonScore.toFixed(0)}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Package className="w-4 h-4 text-violet-500" />
-                    <span className="text-gray-600">在庫:</span>
-                    <div className="flex-1 score-bar">
-                      <div
-                        className="score-bar-fill bg-violet-500"
-                        style={{ width: `${mainProduct.scoreBreakdown.inventoryScore}%` }}
-                      />
+                    <div className="flex items-center gap-2">
+                      <Package className="w-4 h-4 text-violet-500" />
+                      <span className="text-gray-600">在庫:</span>
+                      <div className="flex-1 score-bar">
+                        <div
+                          className="score-bar-fill bg-violet-500"
+                          style={{ width: `${mainProduct.scoreBreakdown.inventoryScore}%` }}
+                        />
+                      </div>
+                      <span className="font-bold tabular-nums">
+                        {mainProduct.scoreBreakdown.inventoryScore.toFixed(0)}
+                      </span>
                     </div>
-                    <span className="font-bold tabular-nums">
-                      {mainProduct.scoreBreakdown.inventoryScore.toFixed(0)}
-                    </span>
                   </div>
                 </div>
-              </div>
+              )}
 
               <div className="flex justify-between items-end">
                 <span className="price-text text-4xl text-bakery-accent">
                   ¥{mainProduct.product.price.toLocaleString()}
                 </span>
-                <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                  {mainProduct.reason}
-                </span>
+                {showScores && (
+                  <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                    {mainProduct.reason}
+                  </span>
+                )}
               </div>
             </div>
           )}
@@ -205,16 +226,20 @@ export default function SignagePage() {
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
                     <h4 className="font-bold text-bakery-primary">{rec.product.name}</h4>
-                    <span className="text-sm font-bold text-emerald-500">{rec.score}点</span>
+                    {showScores && (
+                      <span className="text-sm font-bold text-emerald-500">{rec.score}点</span>
+                    )}
                   </div>
                   <p className="text-xs text-gray-500">{rec.product.department}</p>
                   <div className="flex justify-between items-center mt-2">
                     <span className="price-text text-xl text-bakery-accent">
                       ¥{rec.product.price.toLocaleString()}
                     </span>
-                    <span className="text-xs text-gray-400">
-                      利益率{rec.product.profitMargin.toFixed(0)}%
-                    </span>
+                    {showScores && (
+                      <span className="text-xs text-gray-400">
+                        利益率{rec.product.profitMargin.toFixed(0)}%
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
