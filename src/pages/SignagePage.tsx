@@ -101,10 +101,10 @@ export default function SignagePage() {
       {/* メインコンテンツ */}
       <main className="flex-1 p-6 flex gap-6 overflow-hidden">
         {/* メイン推奨商品 */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0">
           {mainProduct && (
-            <div className="bg-white rounded-2xl shadow-xl p-6 flex-1 flex flex-col animate-fade-in">
-              <div className="flex justify-between items-start mb-2">
+            <div className="bg-white rounded-2xl shadow-xl p-6 flex flex-col animate-fade-in max-w-3xl h-full">
+              <div className="flex justify-between items-start mb-2 flex-shrink-0">
                 <div className="flex items-center gap-2 text-bakery-accent font-bold">
                   <Star className="w-5 h-5" />
                   本日のおすすめ
@@ -117,23 +117,25 @@ export default function SignagePage() {
                 )}
               </div>
 
-              <img
-                src={getProductImagePath(mainProduct.product.code)}
-                onError={(e) => {
-                  e.currentTarget.src = DEFAULT_PRODUCT_IMAGE;
-                }}
-                alt={mainProduct.product.name}
-                className="flex-1 object-cover rounded-xl mb-4 min-h-0"
-              />
+              <div className="flex-1 min-h-0 mb-4">
+                <img
+                  src={getProductImagePath(mainProduct.product.code)}
+                  onError={(e) => {
+                    e.currentTarget.src = DEFAULT_PRODUCT_IMAGE;
+                  }}
+                  alt={mainProduct.product.name}
+                  className="w-full h-full object-cover rounded-xl max-h-[45vh]"
+                />
+              </div>
 
-              <h2 className="text-3xl font-bold text-bakery-primary mb-2">
+              <h2 className="text-3xl font-bold text-bakery-primary mb-2 flex-shrink-0">
                 {mainProduct.product.name}
               </h2>
-              <p className="text-gray-600 mb-3">{mainProduct.product.description}</p>
+              <p className="text-gray-600 mb-3 flex-shrink-0">{mainProduct.product.description}</p>
 
               {/* スコア詳細 */}
               {showScores && (
-                <div className="bg-gray-50 rounded-lg p-3 mb-3 text-sm">
+                <div className="bg-gray-50 rounded-lg p-3 mb-3 text-sm flex-shrink-0">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="flex items-center gap-2">
                       <TrendingUp className="w-4 h-4 text-emerald-500" />
@@ -191,7 +193,7 @@ export default function SignagePage() {
                 </div>
               )}
 
-              <div className="flex justify-between items-end">
+              <div className="flex justify-between items-end flex-shrink-0">
                 <span className="price-text text-4xl text-bakery-accent">
                   ¥{mainProduct.product.price.toLocaleString()}
                 </span>
