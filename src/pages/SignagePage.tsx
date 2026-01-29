@@ -252,7 +252,9 @@ export default function SignagePage() {
         <div className="bg-orange-50 border-t border-orange-200 py-4 px-6">
           <div className="flex items-center justify-center gap-4">
             <Lightbulb className="w-6 h-6 text-orange-500" />
-            <span className="text-lg text-slate-700">{crossSell.suggestionText}</span>
+            <span className="text-lg text-slate-700">
+              こちらもいかがですか？ <span className="font-bold">{suggestedProduct.name}</span>
+            </span>
             <span className="price-text text-xl text-orange-500 font-bold">
               ¥{suggestedProduct.price.toLocaleString()}
             </span>
