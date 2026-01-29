@@ -230,7 +230,7 @@ export default function SignagePage() {
                       <span className="text-sm font-bold text-orange-500">{rec.score}点</span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-400">{rec.product.department}</p>
+                  <p className="text-xs text-slate-400">{rec.product.description}</p>
                   <div className="flex justify-between items-center mt-2">
                     <span className="price-text text-xl text-orange-500">
                       ¥{rec.product.price.toLocaleString()}
