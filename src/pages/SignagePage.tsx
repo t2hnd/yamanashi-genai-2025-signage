@@ -117,14 +117,15 @@ export default function SignagePage() {
                 )}
               </div>
 
-              <div className="flex-1 min-h-0 mb-4">
+              <div className="flex-1 min-h-0 mb-4 flex items-center justify-center">
                 <img
                   src={getProductImagePath(mainProduct.product.code)}
                   onError={(e) => {
                     e.currentTarget.src = DEFAULT_PRODUCT_IMAGE;
                   }}
                   alt={mainProduct.product.name}
-                  className="w-full h-full object-cover rounded-xl max-h-[45vh]"
+                  className="max-w-full max-h-full object-contain rounded-xl"
+                  style={{ height: '280px', width: 'auto' }}
                 />
               </div>
 
