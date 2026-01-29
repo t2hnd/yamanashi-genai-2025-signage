@@ -192,13 +192,11 @@ export interface DisplayConfig {
 // ページルーティング
 // ============================================
 
-export type PageId = 
-  | 'signage' 
-  | 'demo' 
-  | 'logic' 
-  | 'inventory' 
-  | 'network' 
-  | 'simulator';
+export type PageId =
+  | 'signage'
+  | 'demo'
+  | 'logic'
+  | 'inventory';
 
 export interface PageConfig {
   id: PageId;

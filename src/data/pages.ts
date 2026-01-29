@@ -28,20 +28,6 @@ export const pages: PageConfig[] = [
     name: '在庫管理',
     icon: 'package',
     description: '在庫状況とサイネージ連動'
-  },
-  {
-    id: 'network',
-    path: '/network',
-    name: '併売分析',
-    icon: 'network',
-    description: '商品間の併売関係を可視化'
-  },
-  {
-    id: 'simulator',
-    path: '/simulator',
-    name: '利益シミュレーター',
-    icon: 'chart',
-    description: '施策効果を数値で確認'
   }
 ];
 
