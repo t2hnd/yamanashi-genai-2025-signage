@@ -95,7 +95,8 @@ export default function SignagePage() {
       </div>
 
       {/* メインコンテンツ */}
-      <main className="flex-1 p-6 flex gap-6 overflow-hidden">
+      <main className="flex-1 p-6 overflow-hidden flex justify-center">
+        <div className="flex gap-6 max-w-5xl w-full">
         {/* メイン推奨商品 */}
         <div className="flex-1 flex flex-col min-w-0">
           {mainProduct && (
@@ -244,6 +245,7 @@ export default function SignagePage() {
               </div>
             </div>
           ))}
+        </div>
         </div>
       </main>
 
