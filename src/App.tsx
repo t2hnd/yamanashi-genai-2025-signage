@@ -12,6 +12,7 @@ import { pages } from './data/pages';
 import SignagePage from './pages/SignagePage';
 import DemoPage from './pages/DemoPage';
 import LogicPage from './pages/LogicPage';
+import InventoryPage from './pages/InventoryPage';
 
 const iconMap: Record<string, React.ReactNode> = {
   monitor: <Monitor className="w-4 h-4" />,
@@ -81,16 +82,7 @@ export default function App() {
         <Route path="/" element={<SignagePage />} />
         <Route path="/demo" element={<DemoPage />} />
         <Route path="/logic" element={<LogicPage />} />
-        <Route
-          path="/inventory"
-          element={
-            <PlaceholderPage
-              title="在庫管理"
-              description="在庫状況とサイネージ連動"
-              icon={<Package className="w-5 h-5" />}
-            />
-          }
-        />
+        <Route path="/inventory" element={<InventoryPage />} />
         <Route
           path="/network"
           element={
