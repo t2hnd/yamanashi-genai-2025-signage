@@ -7,7 +7,6 @@ import {
   Thermometer,
   Package,
   Lightbulb,
-  AlertTriangle,
   Circle,
   Eye,
   EyeOff
@@ -18,7 +17,6 @@ import { getCurrentSeason, getSeasonById } from '../data/seasonConfigs';
 import { getMainRecommendation, getSubRecommendations } from '../utils/recommendationEngine';
 import { getCrossSellSuggestions } from '../data/crossSellPairs';
 import { getProductByCode } from '../data/products';
-import { getLowStockItems } from '../data/inventory';
 import { Recommendation, TimeSlot, SeasonConfig } from '../types';
 import { getProductImagePath, DEFAULT_PRODUCT_IMAGE } from '../utils/productImage';
 
@@ -58,8 +56,6 @@ export default function SignagePage() {
           : crossSell.productCodeA
       )
     : null;
-
-  const lowStockItems = getLowStockItems(inventory);
 
   return (
     <div className="signage-container flex flex-col bg-gray-50">
@@ -260,26 +256,6 @@ export default function SignagePage() {
             <span className="price-text text-xl text-orange-500 font-bold">
               ¥{suggestedProduct.price.toLocaleString()}
             </span>
-          </div>
-        </div>
-      )}
-
-      {/* 在庫少アラート */}
-      {lowStockItems.length > 0 && (
-        <div className="bg-orange-50 py-2 px-6 ticker-container border-t border-orange-200">
-          <div className="ticker-content flex items-center gap-4">
-            <span className="flex items-center gap-2 text-orange-600 font-bold">
-              <AlertTriangle className="w-4 h-4" />
-              在庫わずか:
-            </span>
-            {lowStockItems.map((item) => {
-              const product = getProductByCode(item.productCode);
-              return product ? (
-                <span key={item.productCode} className="whitespace-nowrap text-slate-600">
-                  {product.name}(残り{item.quantity}個)
-                </span>
-              ) : null;
-            })}
           </div>
         </div>
       )}
