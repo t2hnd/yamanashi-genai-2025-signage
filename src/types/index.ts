@@ -196,7 +196,8 @@ export type PageId =
   | 'signage'
   | 'demo'
   | 'logic'
-  | 'inventory';
+  | 'inventory'
+  | 'items';
 
 export interface PageConfig {
   id: PageId;

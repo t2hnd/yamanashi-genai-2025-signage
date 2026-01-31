@@ -28,6 +28,13 @@ export const pages: PageConfig[] = [
     name: '在庫管理',
     icon: 'package',
     description: '在庫状況とサイネージ連動'
+  },
+  {
+    id: 'items',
+    path: '/items',
+    name: '商品マスタ',
+    icon: 'image',
+    description: '全商品の画像一覧'
   }
 ];
 

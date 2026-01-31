@@ -4,6 +4,7 @@ import {
   SlidersHorizontal,
   Brain,
   Package,
+  Image,
   LogOut,
 } from 'lucide-react';
 import { pages } from './data/pages';
@@ -12,6 +13,7 @@ import SignagePage from './pages/SignagePage';
 import DemoPage from './pages/DemoPage';
 import LogicPage from './pages/LogicPage';
 import InventoryPage from './pages/InventoryPage';
+import ItemsPage from './pages/ItemsPage';
 import LoginPage from './pages/LoginPage';
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -19,6 +21,7 @@ const iconMap: Record<string, React.ReactNode> = {
   sliders: <SlidersHorizontal className="w-4 h-4" />,
   brain: <Brain className="w-4 h-4" />,
   package: <Package className="w-4 h-4" />,
+  image: <Image className="w-4 h-4" />,
 };
 
 function Navigation() {
@@ -87,6 +90,7 @@ export default function App() {
                 <Route path="/demo" element={<DemoPage />} />
                 <Route path="/logic" element={<LogicPage />} />
                 <Route path="/inventory" element={<InventoryPage />} />
+                <Route path="/items" element={<ItemsPage />} />
               </Routes>
             </>
           </ProtectedRoute>
